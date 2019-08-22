@@ -1,6 +1,5 @@
 FROM mandelbot/base
 
-WORKDIR /home
 COPY . .
-ENV PYTHONPATH "/home"
+ENV PYTHONPATH "/"
 ENTRYPOINT ["python", "main.py"]

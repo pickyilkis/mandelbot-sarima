@@ -1,14 +1,6 @@
 from flask import Flask, request, jsonify, json
 import flask
-
-# import gaia_models_sarima as models
-# import gaia_models_single as models
-# import gaia_models_cnnlstm as models
-# import gaia_models_xgb as models
-# import gaia_models_br as models
-# import gaia_models_holt as models
-# import gaia_models_rf as models
-import gaia_models_naive as models
+import models_sarima as models
 
 from dateutil import parser
 import statsmodels
@@ -18,11 +10,15 @@ app = Flask(__name__)
 
 debug = False
 
+
+@app.route('/')
+def hello_world():
+    return 'Sarima'
+
+
 @app.route("/gg",methods=["POST"])
 def happen():
     d = request.get_json(force=True)
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     question = d['data'].get('question', {})
@@ -38,10 +34,12 @@ def happen():
         print('what is going on???')
         return jsonify({"result": d['data'].get('question', {})})
 
+
 def on_question(question):
     prediction = models.on_question(question)
     return prediction
-    
+
+
 def on_truth(truth):
     contestID = truth["responderInfo"]["contestID"]
     value = truth['units'][0]['value']
@@ -50,6 +48,7 @@ def on_truth(truth):
         str_time = str_time[:-1]
     truth_time = parser.parse(str_time)
     models.on_truth(truth_time, value, contestID)
+
 
 port = 8080
 if __name__=="__main__":

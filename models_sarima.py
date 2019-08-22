@@ -10,7 +10,8 @@ from dateutil import parser
 ## Hyperparamters (Participant can change this to tune their model)
 max_size = 100 ## The max size of collected data points
 min_size = 10 ## you have to collect more than min_size data point to fit parameters
- 
+
+
 def on_question(question):
     global models
     contestID = question["responderInfo"]["contestID"]
@@ -36,7 +37,8 @@ def on_question(question):
         print('The prediction is the current value!')
     print('Prediction:', goroar_prediction['units'][0]['value'])
     return goroar_prediction
-    
+
+
 def on_truth(truth_time=None, values=None, contestID = None, **kwargs):
     global model_gens, models, datas, freqs
  
@@ -104,5 +106,3 @@ def on_truth(truth_time=None, values=None, contestID = None, **kwargs):
         models[contestID] = model.fit(truth_time)
         print('finish training !!!!!')
     print('ContestID:', contestID, 'Truth_time:', truth_time, 'Quantity:', values)
-    
- 

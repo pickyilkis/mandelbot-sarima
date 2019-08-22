@@ -11,12 +11,12 @@ app = Flask(__name__)
 debug = False
 
 
-@app.route('/')
+@app.route('/intro')
 def hello_world():
     return 'Sarima'
 
 
-@app.route("/gg",methods=["POST"])
+@app.route("/", methods=["POST"])
 def happen():
     d = request.get_json(force=True)
     print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
